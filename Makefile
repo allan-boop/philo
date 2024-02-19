@@ -4,7 +4,7 @@
 NAME	=philo
 
 CC=				gcc
-CFLAGS=			-Wall -Wextra -Werror
+CFLAGS=			-Wall -Wextra -Werror -g3 -fsanitize=thread -g
 
 all: $(NAME)
 
