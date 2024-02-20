@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/19 16:18:33 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/20 15:17:54 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/time.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <unistd.h>
 
 # define MALLOC_ERR "Malloc error\n"
 # define ARG_ERR "Wrong number of arguments\n"
@@ -34,6 +35,7 @@ typedef struct s_philo
 	int				own_time_to_eat; //temps avant fin de repas
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*l_fork;
+	t_params		*params;
 }				t_philo;
 
 typedef struct s_params
@@ -44,7 +46,6 @@ typedef struct s_params
 	int		time_to_sleep;
 	int		nb_of_t_each_philo_must_eat;
 	int		start_time;
-	t_philo	*philos;
 }				t_params;
 
 int		set_parsing(t_params *params, int ac, char **av);
