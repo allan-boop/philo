@@ -6,13 +6,28 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:05:20 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/20 16:31:35 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/21 18:46:42 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	get_time(void)
+int	ft_usleep(useconds_t time)
+{
+	u_int64_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < time)
+		usleep(time / 10);
+	return (0);
+}
+
+void	ft_msg(t_philo *philo, char *msg)
+{
+	printf("%ld %d %s\n", get_time() - philo->params->start_time, philo->id, msg);
+}
+
+long int	get_time(void)
 {
 	struct timeval	tv;
 

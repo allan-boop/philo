@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:45:44 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/21 14:07:44 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/21 16:52:48 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	init_philos(t_philo **philos, t_params *params)
 	while (i < params->nb_of_philo)
 	{
 		(*philos)[i].id = i + 1;
-		(*philos)[i].time_of_eat = (*params).nb_of_t_each_philo_must_eat;
+		(*philos)[i].meal_count = (*params).nb_of_t_each_philo_must_eat;
 		(*philos)[i].own_time_to_die = (*params).time_to_die;
 		(*philos)[i].own_time_to_eat = 0;
 		(*philos)[i].fork = malloc(sizeof(pthread_mutex_t));
@@ -71,10 +71,12 @@ static int	init_params(t_philo **philos, int ac, char **av)
 	t_params	*params;
 
 	params = malloc(sizeof(t_params));
+	if (!params)
+		return (ft_error(MALLOC_ERR));
 	params->nb_of_philo = ft_atol(av[1]);
-	params->time_to_die = ft_atol(av[2]);
-	params->time_to_eat = ft_atol(av[3]);
-	params->time_to_sleep = ft_atol(av[4]);
+	params->time_to_die = ft_atol(av[2]) * 1000;
+	params->time_to_eat = ft_atol(av[3]) * 1000;
+	params->time_to_sleep = ft_atol(av[4]) * 1000;
 	if (ac == 6)
 		params->nb_of_t_each_philo_must_eat = ft_atol(av[5]);
 	else
