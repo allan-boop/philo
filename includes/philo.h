@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/20 15:17:54 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/21 13:42:19 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,6 @@
 # define ERR_GTOD "Error in gettimeofday\n"
 # define ERR_PTHREAD "Error in pthread_create\n"
 
-typedef struct s_philo
-{
-	int				id;
-	pthread_t		thread;
-	int				time_of_eat;
-	int				own_time_to_die; //temps avant la mort
-	int				own_time_to_eat; //temps avant fin de repas
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	*l_fork;
-	t_params		*params;
-}				t_philo;
-
 typedef struct s_params
 {
 	int		nb_of_philo;
@@ -48,12 +36,24 @@ typedef struct s_params
 	int		start_time;
 }				t_params;
 
-int		set_parsing(t_params *params, int ac, char **av);
+typedef struct s_philo
+{
+	int				id;
+	pthread_t		thread;
+	int				time_of_eat; //nombre de repas
+	int				own_time_to_die; //temps avant la mort
+	int				own_time_to_eat; //temps avant fin de repas
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	*l_fork;
+	t_params		*params;
+}				t_philo;
+
+int		set_parsing(t_philo **philos, int ac, char **av);
 int		ft_error(char *msg);
 long	ft_atol(const char *nptr);
-int		execute_core_logic(t_params params);
+int		execute_core_logic(t_philo *philos);
 int		get_time(void);
-void	free_all(t_params params);
-void	free_tab(t_params params, int i);
+void	free_all(t_philo *philos);
+void	free_tab(t_philo **philos, int i);
 
 #endif

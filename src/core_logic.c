@@ -6,12 +6,12 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:32:56 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/20 15:20:04 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/21 12:55:22 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
+/*
 int	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->fork);
@@ -38,9 +38,11 @@ void	*philo_life(t_philo *philo)
 		eat(philo);
 	return (NULL);
 }
-
-int	execute_core_logic(t_params params)
+*/
+int	execute_core_logic(t_philo *philos)
 {
+	philos = philos;
+/*
 	int	philo_nb;
 
 	philo_nb = params.nb_of_philo;
@@ -58,5 +60,6 @@ int	execute_core_logic(t_params params)
 			return (ft_error(ERR_PTHREAD));
 		pthread_join(params.philos[philo_nb].thread, NULL);
 	}
+*/
 	return (0);
 }

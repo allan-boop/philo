@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:45:44 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/20 15:19:40 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/21 14:07:44 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,41 +32,45 @@ static int	check_params(int ac, char **av)
 	return (0);
 }
 
-static int	free_call(t_params *params, int i)
+static int	free_call(t_philo *philos, int i)
 {
-	free_tab(*params, i);
-	free(params->philos);
+	free_tab(&philos, i);
+	free(philos);
 	return (ft_error(MALLOC_ERR));
 }
 
-static int	init_philos(t_params *params)
+static int	init_philos(t_philo **philos, t_params *params)
 {
 	int	i;
 
 	i = 0;
-	params->philos = malloc(sizeof(t_philo) * params->nb_of_philo);
-	if (!params->philos)
+	*philos = malloc(sizeof(t_philo) * (*params).nb_of_philo);
+	if (!*philos)
 		return (ft_error(MALLOC_ERR));
 	while (i < params->nb_of_philo)
 	{
-		params->philos[i].id = i + 1;
-		params->philos[i].time_of_eat = params->nb_of_t_each_philo_must_eat;
-		params->philos[i].own_time_to_die = params->time_to_die;
-		params->philos[i].own_time_to_eat = 0;
-		params->philos[i].fork = malloc(sizeof(pthread_mutex_t));
-		if (!params->philos[i].fork)
-			return (free_call(params, i));
-		pthread_mutex_init(params->philos[i].fork, NULL);
+		(*philos)[i].id = i + 1;
+		(*philos)[i].time_of_eat = (*params).nb_of_t_each_philo_must_eat;
+		(*philos)[i].own_time_to_die = (*params).time_to_die;
+		(*philos)[i].own_time_to_eat = 0;
+		(*philos)[i].fork = malloc(sizeof(pthread_mutex_t));
+		if (!(*philos)[i].fork)
+			return (free_call(*philos, i));
+		pthread_mutex_init((*philos)[i].fork, NULL);
+		(*philos)[i].params = params;
 		if (i > 0)
-			params->philos[i].l_fork = params->philos[i - 1].fork;
+			(*philos)[i].l_fork = (*philos)[i - 1].fork;
 		i++;
 	}
-	params->philos[0].l_fork = params->philos[params->nb_of_philo - 1].fork;
+	(*philos)[0].l_fork = (*philos)[params->nb_of_philo - 1].fork;
 	return (0);
 }
 
-static int	init_params(t_params *params, int ac, char **av)
+static int	init_params(t_philo **philos, int ac, char **av)
 {
+	t_params	*params;
+
+	params = malloc(sizeof(t_params));
 	params->nb_of_philo = ft_atol(av[1]);
 	params->time_to_die = ft_atol(av[2]);
 	params->time_to_eat = ft_atol(av[3]);
@@ -74,19 +78,19 @@ static int	init_params(t_params *params, int ac, char **av)
 	if (ac == 6)
 		params->nb_of_t_each_philo_must_eat = ft_atol(av[5]);
 	else
-		params->nb_of_t_each_philo_must_eat = 0;
+		params->nb_of_t_each_philo_must_eat = -2;
 	if (params->nb_of_philo == -1 || params->time_to_die == -1
 		|| params->time_to_eat == -1 || params->time_to_sleep == -1
 		|| (ac == 6 && params->nb_of_t_each_philo_must_eat == -1))
 		return (-1);
-	return (init_philos(params));
+	return (init_philos(philos, params));
 }
 
-int	set_parsing(t_params *params, int ac, char **av)
+int	set_parsing(t_philo **philos, int ac, char **av)
 {
 	if (ac != 5 && ac != 6)
 		return (ft_error(ARG_ERR));
 	if (check_params(ac, av) == -1)
 		return (-1);
-	return (init_params(params, ac, av));
+	return (init_params(philos, ac, av));
 }

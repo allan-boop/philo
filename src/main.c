@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:39:08 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/20 15:20:24 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/21 13:44:14 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	main(int ac, char **av)
 {
-	t_params	params;
+	t_philo	*philos;
 
-	if (set_parsing(&params, ac, av) == -1)
+	philos = NULL;
+	if (set_parsing(&philos, ac, av) == -1)
 		return (-1);
-	execute_core_logic(params);
-	free_all(params);
+	execute_core_logic(philos);
+	free_all(philos);
 }
