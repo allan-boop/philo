@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:45:44 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/21 16:52:48 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/23 15:39:21 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,12 @@ static int	init_params(t_philo **philos, int ac, char **av)
 	if (ac == 6)
 		params->nb_of_t_each_philo_must_eat = ft_atol(av[5]);
 	else
-		params->nb_of_t_each_philo_must_eat = -2;
+		params->nb_of_t_each_philo_must_eat = INT_MAX;
 	if (params->nb_of_philo == -1 || params->time_to_die == -1
 		|| params->time_to_eat == -1 || params->time_to_sleep == -1
 		|| (ac == 6 && params->nb_of_t_each_philo_must_eat == -1))
 		return (-1);
+	params->dead = 0;
 	return (init_philos(philos, params));
 }
 

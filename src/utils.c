@@ -6,25 +6,26 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:05:20 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/21 18:46:42 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/23 15:42:29 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_usleep(useconds_t time)
+int	ft_is_dead(t_philo *philo, useconds_t time)
 {
-	u_int64_t	start;
-
-	start = get_time();
-	while ((get_time() - start) < time)
-		usleep(time / 10);
+	if (get_time() - time > philo->params->time_to_die)
+	{
+		ft_msg(philo, DEAD);
+		return (1);
+	}
 	return (0);
 }
 
 void	ft_msg(t_philo *philo, char *msg)
 {
-	printf("%ld %d %s\n", get_time() - philo->params->start_time, philo->id, msg);
+	printf("%ld %d %s\n", get_time() - philo->params->start_time,
+		philo->id, msg);
 }
 
 long int	get_time(void)

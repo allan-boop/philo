@@ -16,7 +16,8 @@ SRC_FILES = main.c \
 			utils.c \
 			parsing.c \
 			error.c \
-			free.c
+			free.c \
+			action.c
 
 SRC_FILES := $(addprefix src/, $(SRC_FILES))
 OBJ_FILES = $(SRC_FILES:.c=.o)

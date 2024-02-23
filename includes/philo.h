@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/21 18:46:59 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/23 15:38:44 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define MALLOC_ERR "Malloc error\n"
 # define ARG_ERR "Wrong number of arguments\n"
@@ -39,6 +40,7 @@ typedef struct s_params
 	int			time_to_sleep;
 	int			nb_of_t_each_philo_must_eat;
 	long int	start_time;
+	int			dead;
 }				t_params;
 
 typedef struct s_philo
@@ -61,7 +63,9 @@ long int	get_time(void);
 void		free_all(t_philo *philos);
 void		free_tab(t_philo **philos, int i);
 void		ft_msg(t_philo *philo, char *msg);
-int			ft_usleep(useconds_t time);
-
+void		ft_get_fork(t_philo *philo);
+void		ft_set_down_fork(t_philo *philo);
+void		ft_eat(t_philo *philo);
+void		ft_sleep(t_philo *philo);
 
 #endif
