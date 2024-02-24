@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/23 15:38:44 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/24 18:24:04 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,18 @@
 # define THINK "is thinking"
 # define FORK "has taken a fork"
 # define DIE "died\n"
+# define MSG "%ld %d %s\n"
 
 typedef struct s_params
 {
-	int			nb_of_philo;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			nb_of_t_each_philo_must_eat;
-	long int	start_time;
-	int			dead;
+	int				nb_of_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nb_of_t_each_philo_must_eat;
+	long int		start_time;
+	pthread_mutex_t	*dead;
+	int				is_dead;
 }				t_params;
 
 typedef struct s_philo
@@ -48,7 +50,8 @@ typedef struct s_philo
 	int				id;
 	pthread_t		thread;
 	int				meal_count; //nombre de repas
-	int				own_time_to_die; //temps avant la mort
+	int				time_to_die; // sauvegarde du temps avant la mort
+	long int		own_time_to_die; //temps avant la mort
 	int				own_time_to_eat; //temps avant fin de repas
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*l_fork;
@@ -62,10 +65,10 @@ int			execute_core_logic(t_philo *philos);
 long int	get_time(void);
 void		free_all(t_philo *philos);
 void		free_tab(t_philo **philos, int i);
-void		ft_msg(t_philo *philo, char *msg);
-void		ft_get_fork(t_philo *philo);
+int			ft_msg(t_philo *philo, char *msg);
+int			ft_get_fork(t_philo *philo);
 void		ft_set_down_fork(t_philo *philo);
-void		ft_eat(t_philo *philo);
-void		ft_sleep(t_philo *philo);
+int			ft_eat(t_philo *philo);
+int			ft_sleep(t_philo *philo);
 
 #endif

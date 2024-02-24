@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:45:44 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/23 15:39:21 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/24 16:50:57 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ static int	init_params(t_philo **philos, int ac, char **av)
 	params->time_to_die = ft_atol(av[2]) * 1000;
 	params->time_to_eat = ft_atol(av[3]) * 1000;
 	params->time_to_sleep = ft_atol(av[4]) * 1000;
+	params->dead = malloc(sizeof(pthread_mutex_t));
+	if (!params->dead)
+		return (ft_error(MALLOC_ERR));
+	params->is_dead = 0;
+	pthread_mutex_init(params->dead, NULL);
 	if (ac == 6)
 		params->nb_of_t_each_philo_must_eat = ft_atol(av[5]);
 	else
@@ -85,7 +90,6 @@ static int	init_params(t_philo **philos, int ac, char **av)
 		|| params->time_to_eat == -1 || params->time_to_sleep == -1
 		|| (ac == 6 && params->nb_of_t_each_philo_must_eat == -1))
 		return (-1);
-	params->dead = 0;
 	return (init_philos(philos, params));
 }
 
