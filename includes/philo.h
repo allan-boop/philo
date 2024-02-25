@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/24 18:24:04 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/25 17:54:13 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@
 # define DIGIT_ERR "Arguments must be a positive digits\n"
 # define ERR_GTOD "Error in gettimeofday\n"
 # define ERR_PTHREAD "Error in pthread_create\n"
+# define ERR_MUTEX "Error in mutex\n"
 # define EAT "is eating"
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define FORK "has taken a fork"
-# define DIE "died\n"
+# define DIE "died"
 # define MSG "%ld %d %s\n"
 
 typedef struct s_params
@@ -53,6 +54,7 @@ typedef struct s_philo
 	int				time_to_die; // sauvegarde du temps avant la mort
 	long int		own_time_to_die; //temps avant la mort
 	int				own_time_to_eat; //temps avant fin de repas
+	long int		round_time; //temps de debut du tour
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*l_fork;
 	t_params		*params;
