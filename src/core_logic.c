@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:32:56 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/25 17:48:02 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/26 10:38:12 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@ static int	routine(t_philo *philo)
 {
 	while (philo->meal_count > 0)
 	{
-		if (ft_get_fork(philo) == -1)
+		ft_get_fork(philo);
+		if (ft_eat(philo))
 			return (-1);
-		ft_eat(philo);
 		ft_set_down_fork(philo);
-		if (ft_sleep(philo) == -1)
-			return (-1);
+		ft_sleep(philo);
 		if (ft_msg(philo, THINK) == -1)
 			return (-1);
 	}

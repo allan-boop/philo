@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:05:20 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/25 17:54:24 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/25 18:13:26 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	ft_msg(t_philo *philo, char *msg)
 
 	msg = msg;
 	ret = -1;
-	if (pthread_mutex_lock(philo->params->dead) == -1)
-		return (ft_error(ERR_MUTEX));
+	pthread_mutex_lock(philo->params->dead);
 	if (philo->params->is_dead == 0)
 	{
 		if (philo->own_time_to_die > get_time())

@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/25 17:54:13 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/25 18:23:55 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ typedef struct s_philo
 	int				id;
 	pthread_t		thread;
 	int				meal_count; //nombre de repas
-	int				time_to_die; // sauvegarde du temps avant la mort
 	long int		own_time_to_die; //temps avant la mort
 	int				own_time_to_eat; //temps avant fin de repas
-	long int		round_time; //temps de debut du tour
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*l_fork;
 	t_params		*params;
