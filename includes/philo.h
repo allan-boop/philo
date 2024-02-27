@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/25 18:23:55 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/27 14:02:32 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				meal_count; //nombre de repas
 	long int		own_time_to_die; //temps avant la mort
-	int				own_time_to_eat; //temps avant fin de repas
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*l_fork;
 	t_params		*params;
@@ -65,7 +64,7 @@ int			execute_core_logic(t_philo *philos);
 long int	get_time(void);
 void		free_all(t_philo *philos);
 void		free_tab(t_philo **philos, int i);
-int			ft_msg(t_philo *philo, char *msg);
+int			ft_msg(t_philo *philo, char *msg, int should_die);
 int			ft_get_fork(t_philo *philo);
 void		ft_set_down_fork(t_philo *philo);
 int			ft_eat(t_philo *philo);

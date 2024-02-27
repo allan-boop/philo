@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:32:56 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/26 10:38:12 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/27 15:03:25 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,20 @@
 
 static int	routine(t_philo *philo)
 {
-	while (philo->meal_count > 0)
+	while (philo->meal_count > 0 && philo->params->is_dead == 0)
 	{
-		ft_get_fork(philo);
-		if (ft_eat(philo))
+		if (ft_get_fork(philo) == -1)
+			return (-1);
+		if (ft_eat(philo) == -1)
 			return (-1);
 		ft_set_down_fork(philo);
-		ft_sleep(philo);
-		if (ft_msg(philo, THINK) == -1)
+		if (ft_sleep(philo) == -1)
 			return (-1);
+		if (philo->params->is_dead == 0)
+		{
+			if (ft_msg(philo, THINK, 0) == -1)
+				return (-1);
+		}
 	}
 	return (0);
 }
@@ -50,7 +55,7 @@ int	execute_core_logic(t_philo *philos)
 	while (philo_nb--)
 	{
 		philos[philo_nb].own_time_to_die = philos[0].params->time_to_die
-			/ 1000 + get_time();
+			+ get_time();
 		if (pthread_create(&philos[philo_nb].thread, NULL,
 				(void *)philo_life, &philos[philo_nb]) != 0)
 			return (ft_error(ERR_PTHREAD));
