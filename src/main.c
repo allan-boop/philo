@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:39:08 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/27 14:47:32 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/27 17:15:34 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int	main(int ac, char **av)
 	philos = NULL;
 	if (set_parsing(&philos, ac, av) == -1)
 		return (-1);
+	if (philos[0].params->nb_of_philo == 1)
+	{
+		printf("0 1 has taken a fork\n%d 1 died\n",
+			philos[0].params->time_to_die);
+		return (0);
+	}
 	execute_core_logic(philos);
 	free_all(philos);
 }

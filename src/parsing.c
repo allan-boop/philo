@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:45:44 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/27 14:46:40 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/27 17:10:17 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ static int	check_params(int ac, char **av)
 	return (0);
 }
 
-static int	free_call(t_philo *philos, int i)
+static int	free_call(t_philo *philos, int i, t_params *params)
 {
 	free_tab(&philos, i);
 	free(philos);
+	free(params->dead);
+	free(params);
 	return (ft_error(MALLOC_ERR));
 }
 
@@ -46,7 +48,7 @@ static int	init_philos(t_philo **philos, t_params *params)
 	i = 0;
 	*philos = malloc(sizeof(t_philo) * (*params).nb_of_philo);
 	if (!*philos)
-		return (ft_error(MALLOC_ERR));
+		return (ft_error_philos(params, MALLOC_ERR));
 	while (i < params->nb_of_philo)
 	{
 		(*philos)[i].id = i + 1;
@@ -54,7 +56,7 @@ static int	init_philos(t_philo **philos, t_params *params)
 		(*philos)[i].own_time_to_die = (*params).time_to_die;
 		(*philos)[i].fork = malloc(sizeof(pthread_mutex_t));
 		if (!(*philos)[i].fork)
-			return (free_call(*philos, i));
+			return (free_call(*philos, i, params));
 		pthread_mutex_init((*philos)[i].fork, NULL);
 		(*philos)[i].params = params;
 		if (i > 0)
@@ -73,12 +75,14 @@ static int	init_params(t_philo **philos, int ac, char **av)
 	if (!params)
 		return (ft_error(MALLOC_ERR));
 	params->nb_of_philo = ft_atol(av[1]);
+	if (params->nb_of_philo == 0)
+		return (error_free_params(params, NO_PHILO));
 	params->time_to_die = ft_atol(av[2]);
 	params->time_to_eat = ft_atol(av[3]) * 1000;
 	params->time_to_sleep = ft_atol(av[4]) * 1000;
 	params->dead = malloc(sizeof(pthread_mutex_t));
 	if (!params->dead)
-		return (ft_error(MALLOC_ERR));
+		return (error_free_params(params, MALLOC_ERR));
 	params->is_dead = 0;
 	pthread_mutex_init(params->dead, NULL);
 	if (ac == 6)

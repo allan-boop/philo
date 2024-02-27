@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:32:56 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/27 15:03:25 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/27 16:45:32 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ int	execute_core_logic(t_philo *philos)
 			+ get_time();
 		if (pthread_create(&philos[philo_nb].thread, NULL,
 				(void *)philo_life, &philos[philo_nb]) != 0)
+		{
+			while (philo_nb++ < philos[0].params->nb_of_philo)
+				pthread_join(philos[philo_nb].thread, NULL);
 			return (ft_error(ERR_PTHREAD));
+		}
 	}
 	philo_nb = philos[0].params->nb_of_philo;
 	while (philo_nb--)

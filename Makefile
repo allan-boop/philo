@@ -42,3 +42,8 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+
+# philo = 0 /
+# philo = 1 /
+# free les malloc en cas de malloc error /
