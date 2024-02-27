@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/27 14:02:32 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/27 17:09:27 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define MALLOC_ERR "Malloc error\n"
 # define ARG_ERR "Wrong number of arguments\n"
 # define ARG_OVERFLOW "Argument overflow\n"
+# define NO_PHILO "No philosophers\n"
 # define DIGIT_ERR "Arguments must be a positive digits\n"
 # define ERR_GTOD "Error in gettimeofday\n"
 # define ERR_PTHREAD "Error in pthread_create\n"
@@ -69,5 +70,7 @@ int			ft_get_fork(t_philo *philo);
 void		ft_set_down_fork(t_philo *philo);
 int			ft_eat(t_philo *philo);
 int			ft_sleep(t_philo *philo);
+int			error_free_params(t_params *params, char *msg);
+int			ft_error_philos(t_params *params, char *msg);
 
 #endif
