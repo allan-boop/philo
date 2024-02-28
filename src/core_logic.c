@@ -6,15 +6,27 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:32:56 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/28 14:11:27 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/28 15:59:25 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+int	check_is_dead(t_philo *philo)
+{
+	int	f;
+
+	f = 1;
+	pthread_mutex_lock(philo->params->dead);
+	if (philo->params->is_dead == 0)
+		f = 0;
+	pthread_mutex_unlock(philo->params->dead);
+	return (f);
+}
+
 static int	routine(t_philo *philo)
 {
-	while (philo->meal_count > 0 && philo->params->is_dead == 0)
+	while (philo->meal_count > 0 && check_is_dead(philo) == 0)
 	{
 		if (ft_get_fork(philo) == -1)
 			return (-1);
@@ -23,11 +35,15 @@ static int	routine(t_philo *philo)
 		ft_set_down_fork(philo);
 		if (ft_sleep(philo) == -1)
 			return (-1);
+		pthread_mutex_lock(philo->params->dead);
 		if (philo->params->is_dead == 0)
 		{
-			if (ft_msg(philo, THINK, 0) == -1)
+			pthread_mutex_unlock(philo->params->dead);
+			if (ft_msg(philo, THINK, 0, 6) == -1)
 				return (-1);
 		}
+		else
+			pthread_mutex_unlock(philo->params->dead);
 	}
 	return (0);
 }

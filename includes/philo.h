@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:42:31 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/27 17:09:27 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/28 16:20:03 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,15 @@ int			execute_core_logic(t_philo *philos);
 long int	get_time(void);
 void		free_all(t_philo *philos);
 void		free_tab(t_philo **philos, int i);
-int			ft_msg(t_philo *philo, char *msg, int should_die);
+int			ft_msg(t_philo *philo, char *msg, int should_die, int i);
 int			ft_get_fork(t_philo *philo);
 void		ft_set_down_fork(t_philo *philo);
 int			ft_eat(t_philo *philo);
 int			ft_sleep(t_philo *philo);
 int			error_free_params(t_params *params, char *msg);
 int			ft_error_philos(t_params *params, char *msg);
+int			even_take_fork(t_philo *philo, int i);
+int			odd_take_fork(t_philo *philo, int i);
+int			prr(t_philo *philo, char *msg);
 
 #endif
