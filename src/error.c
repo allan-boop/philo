@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:49:15 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/27 17:04:52 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/28 12:52:55 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	error_free_params(t_params *params, char *msg)
 
 int	ft_error_philos(t_params *params, char *msg)
 {
+	pthread_mutex_destroy(params->dead);
+	free(params->dead);
 	free(params);
 	return (ft_error(msg));
 }

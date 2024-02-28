@@ -1,10 +1,10 @@
 #########################################
 ## ARGUMENTS
 #########################################
-NAME	=philo
+NAME = philo
 
-CC=				gcc
-CFLAGS=			-Wall -Wextra -Werror -g3
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g3
 all: $(NAME)
 
 ########################################
