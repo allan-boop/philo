@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:05:20 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/27 13:09:03 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/28 14:24:14 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_msg(t_philo *philo, char *msg, int should_die)
 		philo->params->is_dead = 1;
 		pthread_mutex_unlock(philo->fork);
 		pthread_mutex_unlock(philo->l_fork);
+
+
 	}
 	pthread_mutex_unlock(philo->params->dead);
 	return (ret);
