@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:32:56 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/28 12:56:14 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/28 14:11:27 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,29 @@ static void	philo_life(t_philo *philo)
 
 int	execute_core_logic(t_philo *philos)
 {
-	int	philo_nb;
+	int	i;
 
-	philo_nb = philos[0].params->nb_of_philo;
+	i = 0;
 	philos[0].params->start_time = get_time();
 	if (philos[0].params->start_time == -1)
 		return (-1);
-	philo_nb = philos[0].params->nb_of_philo;
-	while (philo_nb--)
+	while (i < philos[0].params->nb_of_philo)
 	{
-		philos[philo_nb].own_time_to_die = philos[0].params->time_to_die
+		philos[i].own_time_to_die = philos[0].params->time_to_die
 			+ get_time();
-		if (pthread_create(&philos[philo_nb].thread, NULL,
-				(void *)philo_life, &philos[philo_nb]) != 0)
+		if (pthread_create(&philos[i].thread, NULL,
+				(void *)philo_life, &philos[i]) != 0)
 		{
-			philo_nb++;
-			while (philo_nb++ < philos[0].params->nb_of_philo)
-				pthread_join(philos[philo_nb].thread, NULL);
+			i--;
+			while (i >= 0)
+			{
+				pthread_join(philos[i--].thread, NULL);
+			}
 			return (ft_error(ERR_PTHREAD));
 		}
+		i++;
 	}
-	philo_nb = philos[0].params->nb_of_philo;
-	while (philo_nb--)
-		pthread_join(philos[philo_nb].thread, NULL);
+	while (i--)
+		pthread_join(philos[i].thread, NULL);
 	return (0);
 }
